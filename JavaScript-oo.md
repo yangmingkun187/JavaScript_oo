@@ -19,18 +19,13 @@
 ```javascript
 
 function Dog() {
-
 	this.name = "大毛";
-
 }
-
 ```
 生成实例的时候，使用new关键字。
 
 ```javascript
-
 var dog1 = new Dog();
-
 alert(dog1.name); // 大毛
 
 ```
@@ -40,9 +35,7 @@ alert(dog1.name); // 大毛
 ```javascript
 
 Dog.prototype.makeSound = function(){
-
 	alert("旺旺旺");
-
 }
 
 ```
@@ -56,11 +49,8 @@ Dog.prototype.makeSound = function(){
 ```javascript
 
 var Dog = {
-
 	name: "大毛",
-
 	makeSound: function(){ alert("旺旺旺"); }
-
 };
 
 ```
@@ -70,9 +60,7 @@ var Dog = {
 ```javascript
 
 var dog1 = Object.create(Dog);
-
 alert(dog1.name); // 大毛
-
 dog1.makeSound(); // 旺旺旺
 
 ```
@@ -80,17 +68,11 @@ dog1.makeSound(); // 旺旺旺
 
 ```javascript
 if (!Object.create) {
-
 	Object.create = function (o) {
-
 		function F() {}
-
 			F.prototype = o;
-
 			return new F();
-
 		};
-
 	}
 
 ```
@@ -108,13 +90,9 @@ if (!Object.create) {
 ```javascript
 
 var Dog = {
-
 	createNew: function(){
-
 		// some code here
-
 	}
-
 };
 
 ```
@@ -123,19 +101,12 @@ var Dog = {
 ```javascript
 
 var Dog = {
-
 	createNew: function(){
-
 		var dog = {};
-
 			dog.name = "大毛";
-
 			dog.makeSound = function(){ alert("旺旺旺"); };
-
 			return dog;
-
 		}
-
 	};
 
 ```
@@ -144,7 +115,6 @@ var Dog = {
 ```javascript
 
 var dog1 = Dog.createNew();
-
 dog1.makeSound(); // 旺旺旺
 
 ```
@@ -158,19 +128,12 @@ dog1.makeSound(); // 旺旺旺
 先定义一个Animal类。
 
 ```javascript
-
 var Animal = {
-
 	createNew: function(){
-
 		var animal = {};
-
 			animal.sleep = function(){ alert("睡懒觉"); };
-
 			return animal;
-
 		}
-
 	};
 
 ```
@@ -179,26 +142,18 @@ var Animal = {
 ```javascript
 
 var Cat = {
-
 	createNew: function(){
-
 		var cat = Animal.createNew();
-
 		cat.name = "大毛";
-
 		cat.makeSound = function(){ alert("喵喵喵"); };
-
 		return cat;
-
 	}
-
 };
 ```
 这样得到的Cat实例，就会同时继承Cat类和Animal类。
 
 ```javascript
 var cat1 = Cat.createNew();
-
 cat1.sleep(); // 睡懒觉
 
 ```
@@ -208,26 +163,18 @@ cat1.sleep(); // 睡懒觉
 
 ```javascript
 var Cat = {
-
 	createNew: function(){
-
 		var cat = {};
-
 			var sound = "喵喵喵";
-
 			cat.makeSound = function(){ alert(sound); };
-
 			return cat;
-
 		}
-
 	};
 ```
 上例的内部变量sound，外部无法读取，只有通过cat的公有方法makeSound()来读取。
 
 ```javascript
 	var cat1 = Cat.createNew();
-
 	alert(cat1.sound); // undefined
 
 ```
@@ -237,17 +184,12 @@ var Cat = {
 有时候，我们需要所有实例对象，能够读写同一项内部数据。这个时候，只要把这个内部数据，封装在类对象的里面、createNew()方法的外面即可。
 
 ```javascript
-
 	var Cat = {
-
 		sound : "喵喵喵",
 		createNew: function(){
 			var cat = {};
-
 			cat.makeSound = function(){ alert(Cat.sound); };
-
 			cat.changeSound = function(x){ Cat.sound = x; };
-
 				return cat;
 			}
 		};
@@ -257,7 +199,6 @@ var Cat = {
 然后，生成两个实例对象：
 
 ```javascript
-
 		var cat1 = Cat.createNew();
 		var cat2 = Cat.createNew();
 
@@ -269,7 +210,6 @@ var Cat = {
 
 ```javascript
 		cat2.changeSound("啦啦啦");
-
 		cat1.makeSound(); // 啦啦啦
 
 ```
@@ -319,7 +259,6 @@ function Super(){
 Super.prototype.getSuperValue = function() {
 	return this.property;
 };
-
 //声明子类的构造函数
 function SubType() {
 	this.subproperty = false;
@@ -330,7 +269,6 @@ SubType.prototype.constructor = SubType;
 SubType.prototype.getSubValue = function(){
 	return this.subproperty;
 };
-
 //由子类创建对象，测试是否继承超类方法和属性
 var instance = new SubType();
 console.log(instance.getSuperValue());
@@ -361,25 +299,17 @@ Javascript是一种基于对象（object-based）的语言，你遇到的所有�
 假定我们把猫看成一个对象，它有"名字"和"颜色"两个属性。
 ```javascript
 var Cat = {
-
 	name : '',
-
 	color : ''
-
 }
 ```
 现在，我们需要根据这个原型对象的规格（schema），生成两个实例对象。
 ```javascript
 var cat1 = {}; // 创建一个空对象
-
 	cat1.name = "大毛"; // 按照原型对象的属性赋值
-
 	cat1.color = "黄色";
-
 	var cat2 = {};
-
 		cat2.name = "二毛";
-
 		cat2.color = "黑色";
 
 ```
@@ -392,21 +322,15 @@ var cat1 = {}; // 创建一个空对象
 ```javascript
 
 function Cat(name,color){
-
 	return {
-
 		name:name,
-
 		color:color
-
 	}
-
 }
 ```
 然后生成实例对象，就等于是在调用函数：
 ```javascript
 var cat1 = Cat("大毛","黄色");
-
 var cat2 = Cat("二毛","黑色");
 ```
 这种方法的问题依然是，cat1和cat2之间没有内在的联系，不能反映出它们是同一个原型对象的实例
@@ -420,33 +344,25 @@ var cat2 = Cat("二毛","黑色");
 比如，猫的原型对象现在可以这样写，
 ```javascript
 function Cat(name,color){
-
 	this.name=name;
-
 	this.color=color;
-
 }
 ```
 我们现在就可以生成实例对象了。
 ```javascript
 var cat1 = new Cat("大毛","黄色");
-
 var cat2 = new Cat("二毛","黑色");
-
 alert(cat1.name); // 大毛
-
 alert(cat1.color); // 黄色
 ```
 这时cat1和cat2会自动含有一个constructor属性，指向它们的构造函数。
 ```javascript
 alert(cat1.constructor == Cat); //true
-
 alert(cat2.constructor == Cat); //true
 ```
 Javascript还提供了一个instanceof运算符，验证原型对象与实例对象之间的关系。
 ```javascript
 alert(cat1 instanceof Cat); //true
-
 alert(cat2 instanceof Cat); //true
 ```
 ##### 4. 构造函数模式的问题
@@ -454,31 +370,23 @@ alert(cat2 instanceof Cat); //true
 构造函数方法很好用，但是存在一个浪费内存的问题。
 
 请看，我们现在为Cat对象添加一个不变的属性"type"（种类），再添加一个方法eat（吃老鼠）。那么，原型对象Cat就变成了下面这样：
-```
+```javascript
 function Cat(name,color){
-
 	this.name = name;
-
 	this.color = color;
-
 	this.type = "猫科动物";
-
 	this.eat = function(){alert("吃老鼠");};
-
 }
 ```
 还是采用同样的方法，生成实例：
-```
+```javascript
 var cat1 = new Cat("大毛","黄色");
-
 var cat2 = new Cat ("二毛","黑色");
-
 alert(cat1.type); // 猫科动物
-
 cat1.eat(); // 吃老鼠
 ```
 表面上好像没什么问题，但是实际上这样做，有一个很大的弊端。那就是对于每一个实例对象，type属性和eat()方法都是一模一样的内容，每一次生成一个实例，都必须为重复的内容，多占用一些内存。这样既不环保，也缺乏效率。
-```
+```javascript
 alert(cat1.eat == cat2.eat); //false
 ```
 能不能让type属性和eat()方法在内存中只生成一次，然后所有实例都指向那个内存地址呢？回答是可以的。
@@ -488,31 +396,23 @@ alert(cat1.eat == cat2.eat); //false
 Javascript规定，每一个构造函数都有一个prototype属性，指向另一个对象。这个对象的所有属性和方法，都会被构造函数的实例继承。
 
 这意味着，我们可以把那些不变的属性和方法，直接定义在prototype对象上。
-```
+```javascript
 function Cat(name,color){
-
 	this.name = name;
-
 	this.color = color;
-
 }
-
 Cat.prototype.type = "猫科动物";
-
 Cat.prototype.eat = function(){alert("吃老鼠")};
 ```
 然后，生成实例。
-```
+```javascript
 var cat1 = new Cat("大毛","黄色");
-
 var cat2 = new Cat("二毛","黑色");
-
 alert(cat1.type); // 猫科动物
-
 cat1.eat(); // 吃老鼠
 ```
 这时所有实例的type属性和eat()方法，其实都是同一个内存地址，指向prototype对象，因此就提高了运行效率。
-```
+```javascript
 alert(cat1.eat == cat2.eat); //true
 ```
 
@@ -523,28 +423,109 @@ alert(cat1.eat == cat2.eat); //true
 ###### 6.1 isPrototypeOf()
 
 这个方法用来判断，某个proptotype对象和某个实例之间的关系。
-```
+```javascript
 alert(Cat.prototype.isPrototypeOf(cat1)); //true
-
 alert(Cat.prototype.isPrototypeOf(cat2)); //true
 ```
 ###### 6.2 hasOwnProperty()
 
 每个实例对象都有一个hasOwnProperty()方法，用来判断某一个属性到底是本地属性，还是继承自prototype对象的属性。
-```
+```javascript
 alert(cat1.hasOwnProperty("name")); // true
-
 alert(cat1.hasOwnProperty("type")); // false
 ```
 ###### 6.3 in运算符
 
 in运算符可以用来判断，某个实例是否含有某个属性，不管是不是本地属性。
-```
+```javascript
 alert("name" in cat1); // true
-
 alert("type" in cat1); // true
 ```
 in运算符还可以用来遍历某个对象的所有属性。
-```
+```javascript
 for(var prop in cat1) { alert("cat1["+prop+"]="+cat1[prop]); }
 ```
+
+#### 什么是多态
+
+##### 重载和覆盖
+
+先来说明一下重载和覆盖的区别。重载的英文是 overload，覆盖的英文是 override。发现网上大多数人把 override 当成了重载，这个是不对的。重载和覆盖是有区别的。
+
+重载的意思是，同一个名字的函数（注意这里包括函数）或方法可以有多个实现，他们依靠参数的类型和（或）参数的个数来区分识别。
+
+而覆盖的意思是，子类中可以定义与父类中同名，并且参数类型和个数也相同的方法，这些方法的定义后，在子类的实例化对象中，父类中继承的这些同名方法将被隐藏。
+
+##### 重载
+
+javascript 中函数的参数是没有类型的，并且参数个数也是任意的，例如，尽管你可以定义一个：
+
+```javascript
+function add(a, b) {
+	return a + b;
+}
+```
+这样的函数，但是你仍然可以再调用它是带入任意多个参数，当然，参数类型也是任意的。至于是否出错，那是这个函数中所执行的内容来决定的，javascript 并不根据你指定的参数个数和参数类型来判断你调用的是哪个函数。
+
+因此，要定义重载方法，就不能像强类型语言中那样做了。但是你仍然可以实现重载。就是通过函数的 arguments 属性。例如：
+
+```javascript
+function add() {
+	var sum = 0;
+	for (var i = 0; i < arguments.length; i++) {
+		sum += arguments[i];
+	}
+	return sum;
+}
+```
+这样你就实现了任意多个参数加法函数的重载了。
+
+当然，你还可以在函数中通过 instanceof 或者 constructor 来判断每个参数的类型，来决定后面执行什么操作，实现更为复杂的函数或方法重载。总之，javascript 的重载，是在函数中由用户自己通过操作 arguments 这个属性来实现的。
+
+##### 覆盖
+
+实现覆盖也很容易，例如：
+
+```javascript
+function parentClass() {
+	this.method = function() {
+		alert("parentClass method");
+	}
+}
+function subClass() {
+	this.method = function() {
+		alert("subClass method");
+	}
+}
+subClass.prototype = new parentClass();
+subClass.prototype.constructor = subClass;
+
+var o = new subClass();
+o.method();
+```
+这样，子类中定义的 method 就覆盖了从父类中继承来的 method 方法了。
+
+你可能会说，这样子覆盖是不错，但 java 中，覆盖的方法里面可以调用被覆盖的方法（父类的方法），在这里怎么实现呢？也很容易，而且比 java 中还要灵活，java 中限制，你只能在覆盖被覆盖方法的方法中才能使用 super 来调用次被覆盖的方法。我们不但可以实现这点，而且还可以让子类中所有的方法中都可以调用父类中被覆盖的方法。看下面的例子：
+
+```javascript
+function parentClass() {
+	this.method = function() {
+		alert("parentClass method");
+	}
+}
+function subClass() {
+	var method = this.method;
+	this.method = function() {
+		method.call(this);
+		alert("subClass method");
+	}
+}
+subClass.prototype = new parentClass();
+subClass.prototype.constructor = subClass;
+
+var o = new subClass();
+o.method();
+```
+你会发现，原来这么简单，只要在定义覆盖方法前，定义一个私有变量，然后把父类中定义的将要被覆盖的方法赋给它，然后我们就可以在后面继续调用它了，而且这个是这个方法是私有的，对于子类的对象是不可见的。这样跟其它高级语言实现的覆盖就一致了。
+
+最后需要注意，我们在覆盖方法中调用这个方法时，需要用 call 方法来改变执行上下文为 this（虽然在这个例子中没有必要），如果直接调用这个方法，执行上下文就会变成全局对象了。
