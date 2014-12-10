@@ -529,3 +529,50 @@ o.method();
 你会发现，原来这么简单，只要在定义覆盖方法前，定义一个私有变量，然后把父类中定义的将要被覆盖的方法赋给它，然后我们就可以在后面继续调用它了，而且这个是这个方法是私有的，对于子类的对象是不可见的。这样跟其它高级语言实现的覆盖就一致了。
 
 最后需要注意，我们在覆盖方法中调用这个方法时，需要用 call 方法来改变执行上下文为 this（虽然在这个例子中没有必要），如果直接调用这个方法，执行上下文就会变成全局对象了。
+
+### node.js
+
+Node.js是一个事件驱动I/O服务端JavaScript环境，基于Google的V8引擎。目的是为了提供撰写可扩充网络程序，如Web服务。与一般JavaScript不同的地方，Node.js并不是在Web浏览器上运行，而是一种在服务器上运行的Javascript服务端JavaScript。Node.js实作了部份CommonJS规格（Spec）。[4]Node.js包含了一个交互测试REPL环境
+
+#### node.js debugger;
+
+Nodejs提供了一个内建调试器来帮助开发者调试应用程序。想要开启调试器我们需要在代码中加入debugger标签，当Nodejs执行到debugger标签时会自动暂停（debugger标签相当于在代码中开启一个断点）。代码如下：
+```javascript
+function Person(name, age){
+	this.name = name;
+	this.age = age;
+}
+Person.prototype.walk = function(){
+	console.log(this.name, 'walking');
+};
+
+function Students(name, age, id){
+	Person.call(this,name,age);
+	this.id = id;
+
+}
+debugger;
+Students.prototype = Object.create(Person.prototype);
+Students.prototype.constructor = Students;
+var stu = new Students("杨明昆");
+stu.walk();
+
+```
+执行后效果图如下：
+
+```shell
+yangmingkun@yangmingkun ~/Desktop $ node debug person.js
+< debugger listening on port 5858
+connecting... ok
+break in person.js:5
+3   this.age = age;
+4 }
+5 Person.prototype.walk = function(){
+	6   console.log(this.name, 'walking');
+	7 };
+	debug> help
+	Commands: run (r), cont (c), next (n), step (s), out (o), backtrace (bt), setBreakpoint (sb), clearBreakpoint (cb),
+	watch, unwatch, watchers, repl, restart, kill, list, scripts, breakOnException, breakpoints, version
+	debug>
+```
+输入help指令可以查看继续进行的操作。
